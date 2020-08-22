@@ -1,0 +1,22 @@
+{
+  "name": "covid-graphs",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000C\u0000o\u0000v\u0000i\u0000d\u0000-\u0000G\u0000r\u0000a\u0000p\u0000h\u0000s\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MyGg29/Covid-Graphs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MyGg29/Covid-Graphs/issues"
+  },
+  "homepage": "https://github.com/MyGg29/Covid-Graphs#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

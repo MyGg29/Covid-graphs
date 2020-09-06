@@ -1,0 +1,28 @@
+etre en msure de programmer un véhicule
+
+on a 1 vehicule, un kilometrage et des révisions à faire, il a des organes de sécuritéer a verifier tout les 40 mois ou tout les 10 an
+les vérifications sont a programmer
+
+lier des documents à un véhicule et programmer des action et les responsables.a
+véhicule : preventif/curatif
+
+liste des actions préventives
+
+type d'actions
+date programmé
+date de réalisation
+qui, quel garage :
+
+liste des actions préventives : on clique dessus et on 
+
+extration de tous les évènements d'une années, faire un résumé des actions faites sur une période
+
+année de mise en circulation, préssion pneu
+
+ne pas avoir à ouvrir l'application
+
+action curative
+créé une alert : oui 
+quel type d'alert : mail
+contenu : 
+

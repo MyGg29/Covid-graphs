@@ -12,26 +12,28 @@
         <ListAction v-on:update:selected="selectedAction = $event" />
       </v-col>
       <v-col 
-        v-if="typeof selectedAction === 'number'"
+        v-if="typeof selectedAction.id === 'number'"
         cols="10">
         <v-card>
           <v-row>
             <v-col cols="5">
               <v-card>
+                <v-card-title>
+                  <h1>{{selectedAction.text}}</h1>
+                </v-card-title>
                 <v-form ref="form" v-model="valid" lazy-validation>
-                  <v-card>
-                  </v-card>
-                  <v-card class="ma-2" elevation=1 >
+                  <v-card class="mx-4" elevation=1 >
                     <v-card-title primary-title>
                       <h3 class="headline mb-0">Récurence</h3>
                     </v-card-title>
                     <v-card-text
-                      class="d-flex flex-row mb-6"
+                      class="d-flex flex-column"
                     >
+                      <div class="d-flex flex-row mb-4">
                         <v-text-field
                           v-model="recurrence.chiffre"
                           :rule="recurrence.chiffreRule"
-                          prefix="Répéter tout les"
+                          prefix="Répéter tout les :"
                           type="number"
                           placeholder="x"
                           required
@@ -43,9 +45,22 @@
                           label="Période"
                           required
                         ></v-select>
+                      </div>
+                      <v-select
+                        v-model="recurrence.aPartirDe"
+                        :items="recurrence.aPartirDeItems"
+                        label="Période"
+                        required
+                      ></v-select>
+                      <div class="d-none">
+                        <DatePicker
+                          v-model="recurrence.aPartirDeDate"
+                          label="Démarrer le"
+                        ></DatePicker>
+                      </div>
                     </v-card-text>
                   </v-card>
-                  <v-card class="ma-2" elevation=1 >
+                  <v-card class="mx-4 my-2" elevation=1 >
                     <v-card-title primary-title>
                       <h3 class="headline mb-0">Notifications</h3>
                     </v-card-title>
@@ -60,7 +75,7 @@
                           placeholder="x"
                           required
                           suffix="jours avant par"
-                          class="px-2"
+                          class="px-2 centered-input"
                         ></v-text-field>
                         <v-select
                           v-model="notifications.methodeSelected"
@@ -91,7 +106,7 @@
             <v-col cols="7">
               <v-card>
                 <v-card-title>
-                  <h1>Actions prévues</h1>
+                  <h1>Evènements prévues</h1>
                 </v-card-title>
                 <v-card-text>
                   <Table :itemsPerPage="10" :responsables="responsables"/>
@@ -107,11 +122,13 @@
 <script>
 import ListAction from "@/components/ListAction";
 import Table from "@/components/Table"
+import DatePicker from "@/components/utils/DatePicker"
 export default {
   props: ["id"],
   components: {
     ListAction,
     Table,
+    DatePicker
   },
   data: function () {
     return {
@@ -128,15 +145,21 @@ export default {
           text: "Action préventive",
         },
       ],
-      selectedAction: 0,
+      selectedAction: {
+        id: 0,
+        text: ""
+      },
       valid: true,
       recurrence: {
-        chiffre: null,
+        chiffre: 1,
         chiffreRules: (v) => !!v || "Fréquence obligatoire",
-        periode: "jour",
-        items: ["jour","mois", "année"]
+        periode: "mois",
+        items: ["jour","mois", "année"],
+        aPartirDe: "Tout les 15 du mois",
+        aPartirDeDate: "2020-04-15",
+        aPartirDeItems: ["Tout les 15 du mois", "Tout les mois le troisième mardi"]
       },
-      delaiNotification: "",
+      delaiNotification: 15,
       delaiRules: [
         (v) => !!v || "Delai obligatoire",
       ],

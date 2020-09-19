@@ -4,8 +4,10 @@
       :headers="headers"
       :items="actions"
       :items-per-page="itemsPerPage"
+      :page="focusIncomingAction ? pageIncomingAction : 1"
       sort-by="dateProgramme"
       class="elevation-1"
+      @dblclick:row="(e, item) => editItem(item.item)"
     >
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
@@ -29,7 +31,7 @@
               <v-form>
                 <v-row>
                   <v-col cols="12" sm="6" md="6">
-                    <DatePicker label="Date de programmation" v-model="editedItem.dateProgramme"></DatePicker>
+                    <DatePicker disabled label="Date de programmation" v-model="editedItem.dateProgramme"></DatePicker>
                     <v-select
                       v-model="editedItem.responsable"
                       :items="responsables"
@@ -74,6 +76,7 @@ export default {
     itemsPerPage: Number,
     showCreateButton: Boolean,
     responsables: Array,
+    focusIncomingAction: Boolean,
   },
   data: () => ({
     dialog: false,
@@ -106,6 +109,9 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Editer action préventive";
     },
+    pageIncomingAction: function(){
+      return this.actions.findIndex((x) => x.dateRealisation === null) % this.itemsPerPage + 1;
+    }
   },
   watch: {
     dialog(val) {
@@ -119,70 +125,98 @@ export default {
     initialize() {
       this.actions = [
         {
-          dateProgramme: new Date("2018-09-22T15:00:00").toISOString().substr(0, 10),
+          dateProgramme: new Date("2020-04-15").toISOString().substr(0, 10),
           responsable: "xavier",
           lieuRealisation: "Brest",
-          dateRealisation: new Date("2018-09-23T15:00:00").toISOString().substr(0, 10),
+          dateRealisation: new Date("2020-04-21").toISOString().substr(0, 10),
           commentaire: 4.0,
         },
         {
-          dateProgramme: new Date("2019-09-22T15:00:00").toISOString().substr(0, 10),
+          dateProgramme: new Date("2020-05-15").toISOString().substr(0, 10),
           responsable: "xavier",
           lieuRealisation: "Brest",
-          dateRealisation: new Date("2019-10-24T15:00:00").toISOString().substr(0, 10),
+          dateRealisation: new Date("2020-05-15").toISOString().substr(0, 10),
           commentaire: 4.3,
         },
         {
-          dateProgramme: new Date().toISOString().substr(0, 10),
+          dateProgramme: new Date("2020-06-15").toISOString().substr(0, 10),
           responsable: "xavier",
           lieuRealisation: "Brest",
-          dateRealisation: new Date().toISOString().substr(0, 10),
+          dateRealisation: new Date("2020-06-15").toISOString().substr(0, 10),
           commentaire: 6.0,
         },
         {
-          dateProgramme: new Date().toISOString().substr(0, 10),
+          dateProgramme: new Date("2020-07-15").toISOString().substr(0, 10),
           responsable: "pierre",
           lieuRealisation: "Brest",
-          dateRealisation: new Date().toISOString().substr(0, 10),
+          dateRealisation: new Date("2020-07-20").toISOString().substr(0, 10),
           commentaire: 4.3,
         },
         {
-          dateProgramme: new Date().toISOString().substr(0, 10),
+          dateProgramme: new Date("2020-08-15").toISOString().substr(0, 10),
           responsable: "pierre",
           lieuRealisation: "Brest",
-          dateRealisation: new Date().toISOString().substr(0, 10),
+          dateRealisation: new Date("2020-08-16").toISOString().substr(0, 10),
           commentaire: 3.9,
         },
         {
-          dateProgramme: new Date().toISOString().substr(0, 10),
+          dateProgramme: new Date("2020-09-15").toISOString().substr(0, 10),
           responsable: "paul",
           lieuRealisation: "Brest",
-          dateRealisation: null,
+          dateRealisation: new Date("2020-09-15").toISOString().substr(0, 10),
           commentaire: 0.0,
         },
         {
-          dateProgramme: new Date().toISOString().substr(0, 10),
+          dateProgramme: new Date("2020-10-15").toISOString().substr(0, 10),
           responsable: "paul",
           lieuRealisation: "Brest",
           dateRealisation: null,
           commentaire: 0,
         },
         {
-          dateProgramme: new Date().toISOString().substr(0, 10),
+          dateProgramme: new Date("2020-11-15").toISOString().substr(0, 10),
           responsable: "paul",
           lieuRealisation: "Brest",
           dateRealisation: null,
           commentaire: 6.5,
         },
         {
-          dateProgramme: new Date().toISOString().substr(0, 10),
+          dateProgramme: new Date("2020-12-15").toISOString().substr(0, 10),
           responsable: "jack",
           lieuRealisation: "Brest",
           dateRealisation: null,
           commentaire: 4.9,
         },
         {
-          dateProgramme: new Date().toISOString().substr(0, 10),
+          dateProgramme: new Date("2021-01-15").toISOString().substr(0, 10),
+          responsable: "jack",
+          lieuRealisation: "Brest",
+          dateRealisation: null,
+          commentaire: 7,
+        },
+        {
+          dateProgramme: new Date("2021-01-15").toISOString().substr(0, 10),
+          responsable: "jack",
+          lieuRealisation: "Brest",
+          dateRealisation: null,
+          commentaire: 7,
+        },
+        {
+          dateProgramme: new Date("2021-01-15").toISOString().substr(0, 10),
+          responsable: "jack",
+          lieuRealisation: "Brest",
+          dateRealisation: null,
+          commentaire: 7,
+        },
+        {
+          dateProgramme: new Date("2021-01-15").toISOString().substr(0, 10),
+          responsable: "jack",
+          lieuRealisation: "Brest",
+          dateRealisation: null,
+          commentaire: 7,
+        },
+        {
+          dateProgramme: new Date("2021-01-15").toISOString().substr(0, 10),
           responsable: "jack",
           lieuRealisation: "Brest",
           dateRealisation: null,

@@ -7,6 +7,7 @@
     transition="scale-transition"
     offset-y
     min-width="290px"
+    :disabled="disabled"
   >
     <template v-slot:activator="{ on, attrs }">
       <v-text-field

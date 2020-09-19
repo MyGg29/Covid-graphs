@@ -20,7 +20,7 @@
       <section id="actions-preventive">
         <v-card>
           <v-card-title>Actions preventive</v-card-title>
-          <Table :itemsPerPage="5" />
+          <Table :itemsPerPage="5" focusIncomingAction/>
           <v-card-actions>
             <v-btn color="blue" block :to="'/vehicule/'+id+'/actionsprev'">Accéder les actions préventives</v-btn>
           </v-card-actions>
@@ -29,7 +29,7 @@
       <section id="actions-curative">
         <v-card>
           <v-card-title>Actions curative</v-card-title>
-          <Table :itemsPerPage="5" />
+          <Table :itemsPerPage="5" focusIncomingAction />
           <v-card-actions>
             <v-btn block color="blue">Créer une action curative</v-btn>
           </v-card-actions>

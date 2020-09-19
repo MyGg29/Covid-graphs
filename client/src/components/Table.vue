@@ -1,112 +1,220 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="desserts"
-    :items-per-page="5"
-    class="elevation-1"
-  ></v-data-table>
+  <div>
+    <v-data-table
+      :headers="headers"
+      :items="actions"
+      :items-per-page="itemsPerPage"
+      sort-by="dateProgramme"
+      class="elevation-1"
+    >
+      <template v-slot:[`item.actions`]="{ item }">
+        <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+      </template>
+      <template v-slot:no-data>
+        <v-btn color="primary" @click="initialize">Reset</v-btn>
+      </template>
+    </v-data-table>
+    <v-toolbar flat color="white" :height="showCreateButton ? undefined : '0px'">
+      <v-dialog v-model="dialog" max-width="700px">
+        <template v-if="showCreateButton" v-slot:activator="{ on, attrs }">
+          <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on" block>New Item</v-btn>
+        </template>
+        <v-card>
+          <v-card-title>
+            <span class="headline">{{ formTitle }}</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container>
+              <v-form>
+                <v-row>
+                  <v-col cols="12" sm="6" md="6">
+                    <DatePicker label="Date de programmation" v-model="editedItem.dateProgramme"></DatePicker>
+                    <v-select
+                      v-model="editedItem.responsable"
+                      :items="responsables"
+                      label="Réponsable"
+                    ></v-select>
+                    <v-text-field 
+                      v-model="editedItem.lieuRealisation" 
+                      label="Lieu de réalisation"
+                    ></v-text-field>
+                    <DatePicker label="Date de réalisation" v-model="editedItem.dateRealisation"></DatePicker>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-file-input multiple chips label="Pièces jointes"></v-file-input>
+                    <v-textarea 
+                      v-model="editedItem.commentaire" 
+                      label="Commentaire"
+                    ></v-textarea>
+                  </v-col>
+                </v-row>
+              </v-form>
+            </v-container>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
+            <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-toolbar>
+  </div>
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        headers: [
-          {
-            text: 'Dessert (100g serving)',
-            align: 'start',
-            sortable: false,
-            value: 'name',
-          },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' },
-        ],
-        desserts: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: '1%',
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%',
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: '7%',
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            iron: '8%',
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            iron: '16%',
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            iron: '0%',
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            iron: '2%',
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            iron: '45%',
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%',
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%',
-          },
-        ],
-      }
+import DatePicker from "@/components/utils/DatePicker";
+export default {
+  components: {
+    DatePicker,
+  },
+  props: {
+    itemsPerPage: Number,
+    showCreateButton: Boolean,
+    responsables: Array,
+  },
+  data: () => ({
+    dialog: false,
+    headers: [
+      { text: "Date de programmation", value: "dateProgramme" },
+      { text: "Date de réalisation", value: "dateRealisation" },
+      { text: "Lieu de réalisation", value: "lieuRealisation" },
+      { text: "Responsable", value: "responsable" },
+      { text: "Commentaire", value: "commentaire" },
+      { text: "Actions", value: "actions", sortable: false },
+    ],
+    actions: [],
+    editedIndex: -1,
+    editedItem: {
+      dateProgramme: "",
+      responsable: 0,
+      lieuRealisation: 0,
+      dateRealisation: 0,
+      commentaire: 0,
     },
-  }
+    defaultItem: {
+      dateProgramme: "",
+      responsable: 0,
+      lieuRealisation: 0,
+      dateRealisation: 0,
+      commentaire: 0,
+    },
+  }),
+  computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? "New Item" : "Editer action préventive";
+    },
+  },
+  watch: {
+    dialog(val) {
+      val || this.close();
+    },
+  },
+  created() {
+    this.initialize();
+  },
+  methods: {
+    initialize() {
+      this.actions = [
+        {
+          dateProgramme: new Date("2018-09-22T15:00:00").toISOString().substr(0, 10),
+          responsable: "xavier",
+          lieuRealisation: "Brest",
+          dateRealisation: new Date("2018-09-23T15:00:00").toISOString().substr(0, 10),
+          commentaire: 4.0,
+        },
+        {
+          dateProgramme: new Date("2019-09-22T15:00:00").toISOString().substr(0, 10),
+          responsable: "xavier",
+          lieuRealisation: "Brest",
+          dateRealisation: new Date("2019-10-24T15:00:00").toISOString().substr(0, 10),
+          commentaire: 4.3,
+        },
+        {
+          dateProgramme: new Date().toISOString().substr(0, 10),
+          responsable: "xavier",
+          lieuRealisation: "Brest",
+          dateRealisation: new Date().toISOString().substr(0, 10),
+          commentaire: 6.0,
+        },
+        {
+          dateProgramme: new Date().toISOString().substr(0, 10),
+          responsable: "pierre",
+          lieuRealisation: "Brest",
+          dateRealisation: new Date().toISOString().substr(0, 10),
+          commentaire: 4.3,
+        },
+        {
+          dateProgramme: new Date().toISOString().substr(0, 10),
+          responsable: "pierre",
+          lieuRealisation: "Brest",
+          dateRealisation: new Date().toISOString().substr(0, 10),
+          commentaire: 3.9,
+        },
+        {
+          dateProgramme: new Date().toISOString().substr(0, 10),
+          responsable: "paul",
+          lieuRealisation: "Brest",
+          dateRealisation: null,
+          commentaire: 0.0,
+        },
+        {
+          dateProgramme: new Date().toISOString().substr(0, 10),
+          responsable: "paul",
+          lieuRealisation: "Brest",
+          dateRealisation: null,
+          commentaire: 0,
+        },
+        {
+          dateProgramme: new Date().toISOString().substr(0, 10),
+          responsable: "paul",
+          lieuRealisation: "Brest",
+          dateRealisation: null,
+          commentaire: 6.5,
+        },
+        {
+          dateProgramme: new Date().toISOString().substr(0, 10),
+          responsable: "jack",
+          lieuRealisation: "Brest",
+          dateRealisation: null,
+          commentaire: 4.9,
+        },
+        {
+          dateProgramme: new Date().toISOString().substr(0, 10),
+          responsable: "jack",
+          lieuRealisation: "Brest",
+          dateRealisation: null,
+          commentaire: 7,
+        },
+      ];
+    },
+    editItem(item) {
+      this.editedIndex = this.actions.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
+    deleteItem(item) {
+      const index = this.actions.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.actions.splice(index, 1);
+    },
+    close() {
+      this.dialog = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
+    save() {
+      if (this.editedIndex > -1) {
+        Object.assign(this.actions[this.editedIndex], this.editedItem);
+      } else {
+        this.actions.push(this.editedItem);
+      }
+      this.close();
+    },
+  },
+};
 </script>

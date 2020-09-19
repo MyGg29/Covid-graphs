@@ -24,6 +24,9 @@ export default {
       { text: "Nom action 5", icon: "mdi-account" },
       { text: "Nom action 6", icon: "mdi-flag" },
       { text: "Nom action 7", icon: "mdi-clock" },
+      { text: "Nom action 8", icon: "mdi-account" },
+      { text: "Nom action 9", icon: "mdi-flag" },
+      { text: "Nom action 10", icon: "mdi-clock" },
     ],
   }),
   methods: {

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vehicules from '../views/Vehicules'
 import Vehicule from '../views/Vehicule'
+import ActionsPrev from '../views/ActionsPrev'
 
 Vue.use(VueRouter)
 
@@ -17,6 +18,11 @@ const routes = [
     component: Vehicule,
     props: true,
   },
+  {
+    path: '/vehicule/:id/actionsprev',
+    component: ActionsPrev,
+    props: true,
+  }
 ]
 
 const router = new VueRouter({

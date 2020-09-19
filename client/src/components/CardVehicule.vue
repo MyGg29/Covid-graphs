@@ -1,52 +1,53 @@
 <template>
-  <div>
-    <b-card
-      :title="cardTitle"
-      :header="cardHeader"
-      :img-src="cardImgSrc"
-      :img-alt="cardImgAlt"
-      img-top
-      tag="article"
-      style="max-width: 20rem;"
-      class="mb-2"
-    >
-      <b-card-text>Evènements prévus</b-card-text>
-      <b-list-group>
-        <b-list-group-item
-          v-for="action in actionsPrevue"
-          :key="action.id"
-          href="#"
-        >{{action.date.toLocaleDateString()}} - {{action.type}}</b-list-group-item>
-      </b-list-group>
-      <b-button
-        block
-        :to="'/vehicule/' + idLink"
-        variant="primary"
-        class="mt-3"
-      >Accéder au dossier du véhicule</b-button>
-    </b-card>
-  </div>
+  <v-card>
+    <v-img class="white--text align-end" height="200px" :src="cardImgSrc"/>
+
+    <v-card-title >{{cardTitle}}</v-card-title>
+
+    <v-card-text class="text--primary">
+      <div>Lorem ipsum</div>
+
+      <div> dolor sit amet, consectetur </div>
+    </v-card-text>
+    <v-card class="mx-6">
+      <v-list
+        dense
+      >
+        <v-subheader>Informations véhicule</v-subheader>
+        <v-list-item-group color="primary">
+          <v-list-item v-for="(item, i) in infosVehicule" :key="i" >
+            <v-list-item-content>
+              <v-list-item-title >{{item.label}} - {{item.valeur}}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-card>
+    <v-card-actions>
+      <v-btn color="blue" :to="'vehicule/' + idVehicule" block>Acceder au dossier du véhicule</v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 <script>
 export default {
   name: "CardVehicule",
   props: {
-    idLink: Number,
+    idVehicule: Number,
     cardTitle: String,
     cardText: String,
     cardHeader: String,
     cardImgSrc: String,
-    cardImgAlt: String
+    cardImgAlt: String,
   },
   data() {
     return {
-      actionsPrevue: [
-        { id: 1, date: new Date(2020, 0, 1), type: "révision" },
-        { id: 2, date: new Date(2020, 0, 1), type: "vidange" },
-        { id: 3, date: new Date(2020, 2, 10), type: "vidange" },
-        { id: 4, date: new Date(2020, 2, 10), type: "révision" }
-      ]
+      infosVehicule: [
+        { label: "Marque", valeur: "Mercedes" },
+        { label: "Année de mise en circulation", valeur: "2019" },
+        { label: "Préssion pneus", valeur: "3 bars" },
+        { label: "Infomation", valeur: "valeur" },
+      ],
     };
-  }
+  },
 };
 </script>

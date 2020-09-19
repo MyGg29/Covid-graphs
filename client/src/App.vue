@@ -1,15 +1,14 @@
 <template>
-  <b-container id="app">
-    <router-view/>
-  </b-container>
+<v-app>
+  <v-main>
+    <v-container>
+      <router-view/>
+    </v-container>
+  </v-main>
+</v-app>
 </template>
 <script>
-  import 'bootstrap/dist/css/bootstrap.css'
-  import 'bootstrap-vue/dist/bootstrap-vue.css'
-  export default {
+export default {
 
-  }
+};
 </script>
-<style>
-
-</style>

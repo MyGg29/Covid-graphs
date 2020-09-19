@@ -26,3 +26,5 @@ créé une alert : oui
 quel type d'alert : mail
 contenu : 
 
+
+card vehicule : info technique du véhicule : marque, nombre de roues, 

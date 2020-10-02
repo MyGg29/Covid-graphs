@@ -1,30 +1,46 @@
 <template>
   <div>
-    <v-breadcrumbs :items="breadcrumbs" large>
+    <v-breadcrumbs
+      :items="breadcrumbs"
+      large
+    >
       <template v-slot:item="{ item }">
-        <v-breadcrumbs-item :href="item.href" :disabled="item.disabled">
+        <v-breadcrumbs-item
+          :href="item.href"
+          :disabled="item.disabled"
+        >
           <h1>{{ item.text }}</h1>
         </v-breadcrumbs-item>
       </template>
     </v-breadcrumbs>
     <v-row>
       <v-col cols="2">
-        <ListAction v-on:update:selected="selectedAction = $event" />
+        <ListAction @update:selected="selectedAction = $event" />
       </v-col>
       <v-col 
         v-if="typeof selectedAction.id === 'number'"
-        cols="10">
+        cols="10"
+      >
         <v-card>
           <v-row>
             <v-col cols="5">
               <v-card>
                 <v-card-title>
-                  <h1>{{selectedAction.text}}</h1>
+                  <h1>{{ selectedAction.text }}</h1>
                 </v-card-title>
-                <v-form ref="form" v-model="valid" lazy-validation>
-                  <v-card class="mx-4" elevation=1 >
+                <v-form
+                  ref="form"
+                  v-model="valid"
+                  lazy-validation
+                >
+                  <v-card
+                    class="mx-4"
+                    elevation="1"
+                  >
                     <v-card-title primary-title>
-                      <h3 class="headline mb-0">Récurence</h3>
+                      <h3 class="headline mb-0">
+                        Récurence
+                      </h3>
                     </v-card-title>
                     <v-card-text
                       class="d-flex flex-column"
@@ -38,31 +54,36 @@
                           placeholder="x"
                           required
                           class="centered-input"
-                        ></v-text-field>
+                        />
                         <v-select
                           v-model="recurrence.periode"
                           :items="recurrence.items"
                           label="Période"
                           required
-                        ></v-select>
+                        />
                       </div>
-                      <v-select
-                        v-model="recurrence.aPartirDe"
-                        :items="recurrence.aPartirDeItems"
-                        label="Période"
-                        required
-                      ></v-select>
                       <div class="d-none">
-                        <DatePicker
-                          v-model="recurrence.aPartirDeDate"
-                          label="Démarrer le"
-                        ></DatePicker>
+                        <v-select
+                          v-model="recurrence.aPartirDe"
+                          :items="recurrence.aPartirDeItems"
+                          label="Période"
+                          required
+                        />
                       </div>
+                      <DatePicker
+                        v-model="recurrence.aPartirDeDate"
+                        label="A partir de"
+                      />
                     </v-card-text>
                   </v-card>
-                  <v-card class="mx-4 my-2" elevation=1 >
+                  <v-card
+                    class="mx-4 my-2"
+                    elevation="1"
+                  >
                     <v-card-title primary-title>
-                      <h3 class="headline mb-0">Notifications</h3>
+                      <h3 class="headline mb-0">
+                        Notifications
+                      </h3>
                     </v-card-title>
                     <v-card-text>
                       <div
@@ -76,13 +97,13 @@
                           required
                           suffix="jours avant par"
                           class="px-2 centered-input"
-                        ></v-text-field>
+                        />
                         <v-select
                           v-model="notifications.methodeSelected"
                           :items="notifications.methodes"
                           label="Méthode"
                           required
-                        ></v-select>
+                        />
                       </div>
                       <v-select
                         v-model="notifications.selectedDestinataires"
@@ -90,14 +111,12 @@
                         label="Destinataire"
                         multiple
                         required
-                      >
-                      </v-select>
+                      />
                       <v-textarea
                         disabled
                         label="Contenu du message"
                         value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, voluptatum eveniet officia minus facere sed animi iste. Repellendus quisquam molestias, labore ullam earum amet consequuntur, optio tempora accusantium incidunt quo!"
-                      >
-                      </v-textarea>
+                      />
                     </v-card-text>
                   </v-card>
                 </v-form>
@@ -109,7 +128,10 @@
                   <h1>Evènements prévues</h1>
                 </v-card-title>
                 <v-card-text>
-                  <Table :itemsPerPage="10" :responsables="responsables"/>
+                  <Table
+                    :items-per-page="10"
+                    :responsables="responsables"
+                  />
                 </v-card-text>
               </v-card>
             </v-col>
@@ -124,11 +146,16 @@ import ListAction from "@/components/ListAction";
 import Table from "@/components/Table"
 import DatePicker from "@/components/utils/DatePicker"
 export default {
-  props: ["id"],
   components: {
     ListAction,
     Table,
     DatePicker
+  },
+  props: {
+    id: {
+      type: Number,
+      default: 0
+    }
   },
   data: function () {
     return {
@@ -146,8 +173,8 @@ export default {
         },
       ],
       selectedAction: {
-        id: 0,
-        text: ""
+        id: 1,
+        text: null
       },
       valid: true,
       recurrence: {

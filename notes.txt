@@ -28,3 +28,5 @@ contenu :
 
 
 card vehicule : info technique du véhicule : marque, nombre de roues, 
+
+ajouter le nom de l'évènemnt dans les petits tableaux

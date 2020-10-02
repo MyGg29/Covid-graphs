@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-breadcrumbs :items="breadcrumbs" large>
+    <v-breadcrumbs
+      :items="breadcrumbs"
+      large
+    >
       <template v-slot:item="{ item }">
         <v-breadcrumbs-item
           :href="item.href"
@@ -10,40 +13,73 @@
         </v-breadcrumbs-item>
       </template>
     </v-breadcrumbs>
-    <div id="vehicule-grid">
-      <section id="calendrier">
+    <v-row dense>
+      <v-col
+        cols="12"
+        md="4"
+      >
         <v-card>
           <v-card-title>Calendrier</v-card-title>
           <Calendar />
         </v-card>
-      </section>
-      <section id="actions-preventive">
+      </v-col>
+      <v-col
+        cols="12"
+        md="4"
+      >
         <v-card>
           <v-card-title>Actions preventive</v-card-title>
-          <Table :itemsPerPage="5" focusIncomingAction/>
+          <Table
+            headers=""
+            :items-per-page="5"
+          />
           <v-card-actions>
-            <v-btn color="blue" block :to="'/vehicule/'+id+'/actionsprev'">Accéder les actions préventives</v-btn>
+            <v-btn
+              color="blue"
+              block
+              :to="'/vehicule/'+id+'/actionsprev'"
+            >
+              Accéder les actions préventives
+            </v-btn>
           </v-card-actions>
         </v-card>
-      </section>
-      <section id="actions-curative">
+      </v-col>
+      <v-col
+        cols="12"
+        md="4"
+      >
         <v-card>
           <v-card-title>Actions curative</v-card-title>
-          <Table :itemsPerPage="5" focusIncomingAction />
+          <Table
+            :items-per-page="5"
+          />
           <v-card-actions>
-            <v-btn block color="blue">Créer une action curative</v-btn>
+            <v-btn
+              block
+              color="blue"
+            >
+              Créer une action curative
+            </v-btn>
           </v-card-actions>
         </v-card>
-      </section>
-    </div>
+      </v-col>
+    </v-row>
   </div>
 </template>
 <script>
 import Calendar from "../components/Calendar";
 import Table from "../components/Table";
+import { mapState } from "vuex"
 
 export default {
+  components: {
+    Calendar,
+    Table,
+  },
   props: ["id"],
+  created() {
+    this.$store.dispatch("actions/loadActions")
+  },
   data: function () {
     return {
       breadcrumbs: [
@@ -57,39 +93,13 @@ export default {
       ],
     };
   },
-  components: {
-    Calendar,
-    Table,
+  computed: {
+    ...mapState({ 
+      actions: state => state.actions.all
+    }),
   },
 };
 </script>
 
 <style scoped>
-#vehicule-grid {
-  display: grid;
-  grid-template-areas:
-    "cal prv cur"
-    "cal inf inf";
-  grid-template-columns: minmax(200px, 50%) minmax(100px, 25%) minmax(
-      100px,
-      25%
-    );
-  gap: 10px;
-}
-#calendrier {
-  display: block;
-  grid-area: cal;
-}
-#actions-preventive {
-  display: block;
-  grid-area: prv;
-}
-#actions-curative {
-  display: block;
-  grid-area: cur;
-}
-#info-vehicule {
-  display: block;
-  grid-area: inf;
-}
 </style>

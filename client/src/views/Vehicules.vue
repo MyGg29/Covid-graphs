@@ -5,18 +5,37 @@
         <h1>Mes véhicules</h1>
       </v-col>
       <v-col cols="2">
-        <v-btn class="d-block m-auto" color="blue">Ajouter un véhicule</v-btn>
+        <DialogCreateVehicule />
       </v-col>
     </v-row>
-    <ListVehicule />
+    <br>
+    <ListVehicule :vehicules="vehicules" />
   </div>
 </template>
 <script>
+import {mapState, mapActions} from "vuex"
 import ListVehicule from "../components/ListVehicule";
+import DialogCreateVehicule from "../components/DialogCreateVehicule"
 export default {
   name: "Vehicules",
   components: {
-    ListVehicule
-  }
+    ListVehicule,
+    DialogCreateVehicule
+  },
+  data (){
+    return {
+    }
+  },
+  computed: {
+    ...mapState({ 
+      vehicules: state => state.vehicules.all
+    }),
+  },
+  created(){
+    this.$store.dispatch("vehicules/loadVehicules")
+  },
+  methods: {
+    ...mapActions("vehicules", ["addVehicule"]),
+  },
 };
 </script>

@@ -1,9 +1,19 @@
 <template>
-  <v-card class="mx-auto" tile>
+  <v-card
+    class="mx-auto"
+    tile
+  >
     <v-list shaped>
       <v-subheader>Liste actions préventive</v-subheader>
-      <v-list-item-group v-model="selected" v-on:change="click" color="primary">
-        <v-list-item v-for="(item, i) in items" :key="i" >
+      <v-list-item-group
+        v-model="selected"
+        color="primary"
+        @change="click"
+      >
+        <v-list-item
+          v-for="(item, i) in items"
+          :key="i"
+        >
           <v-list-item-content>
             <v-text-field
               v-if="item.editable"
@@ -11,12 +21,11 @@
               label="Ajouter une action"
               append-icon="add"
               @keydown="createAction"
-            >
-            </v-text-field>
+            />
             <v-list-item-title
               v-else
               v-text="item.text" 
-            ></v-list-item-title>
+            />
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
@@ -26,7 +35,7 @@
 <script>
 export default {
   data: () => ({
-    selected: 0,
+    selected: 1,
     items: [
       { text: "Nom action 0" },
       { text: "Nom action 1" },
@@ -44,7 +53,11 @@ export default {
   }),
   methods: {
     click: function(){
-      this.$emit("update:selected", {id:this.selected, text: this.items[this.selected].text})
+      if(typeof this.selected === "number"){
+        this.$emit("update:selected", {id:this.selected, text: this.items[this.selected].text})
+      }else{
+        this.$emit("update:selected", {id:this.selected, text: undefined})
+      }
     },
     createAction: function(e){
       if(e.key==="Enter"){

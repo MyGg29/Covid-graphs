@@ -17,21 +17,45 @@
         readonly
         v-bind="attrs"
         v-on="on"
-      ></v-text-field>
+      />
     </template>
-    <v-date-picker v-model="value" v-on:change="selected" :disabled="disabled" no-title scrollable>
-      <v-spacer></v-spacer>
-      <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-      <v-btn text color="primary" @click="$refs.menu.save(value)">OK</v-btn>
+    <v-date-picker
+      v-model="value"
+      :disabled="disabled"
+      no-title
+      scrollable
+      @change="selected"
+    >
+      <v-spacer />
+      <v-btn
+        text
+        color="primary"
+        @click="menu = false"
+      >
+        Cancel
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="$refs.menu.save(value)"
+      >
+        OK
+      </v-btn>
     </v-date-picker>
   </v-menu>
 </template>
 <script>
 export default {
   props: {
-    label: String,
+    label: {
+      type: String,
+      default: "Default label"
+    },
     disabled: Boolean,
-    value: String,
+    value: {
+      type: String,
+      default: "1970/01/01"
+    } 
   },
   data() {
     return {

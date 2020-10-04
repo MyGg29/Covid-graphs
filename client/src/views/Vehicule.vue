@@ -30,7 +30,11 @@
         <v-card>
           <v-card-title>Actions preventive</v-card-title>
           <Table
-            headers=""
+            show-edit-buttons
+            focus-incoming-actions
+            :headers="headers"
+            :content="actions"
+            :responsables="responsables"
             :items-per-page="5"
           />
           <v-card-actions>
@@ -91,11 +95,20 @@ export default {
           text: "Vehicule " + this.id,
         },
       ],
-    };
+      headers: [
+        { text: "Action", value: "nomAction" },
+        { text: "Date programmé", value: "dateProgramme" },
+        { text: "Date réalisation", value: "dateRealisation" },
+        { text: "Lieu réalisation", value: "lieuRealisation" },
+        { text: "Résponsable", value: "responsable" },
+        { text: "Commentaire", value: "commentaire" },
+      ],
+    }
   },
   computed: {
     ...mapState({ 
-      actions: state => state.actions.all
+      actions: state => state.actions.all,
+      responsables: state => state.actions.responsables
     }),
   },
 };

@@ -4,7 +4,7 @@
       :headers="headers"
       :items="content"
       :items-per-page="itemsPerPage"
-      :page="focusIncomingAction ? pageIncomingAction : 1"
+      :page="focusIncomingActions ? pageIncomingAction : 1"
       sort-by="dateProgramme"
       class="elevation-1"
       @dblclick:row="(e, item) => editItem(item.item)"
@@ -148,7 +148,8 @@ export default {
       type: Array,
       default: () => []
     },
-    focusIncomingAction: Boolean,
+    focusIncomingActions: Boolean,
+    showEditButton: Boolean,
     headers: {
       type: Array,
       default: () => [
@@ -187,7 +188,7 @@ export default {
       return this.editedIndex === -1 ? "New Item" : "Editer action préventive";
     },
     pageIncomingAction: function(){
-      return this.actions.findIndex((x) => x.dateRealisation === null) % this.itemsPerPage + 1;
+      return this.content.findIndex((x) => x.dateRealisation === null) % this.itemsPerPage + 1;
     }
   },
   watch: {
@@ -197,14 +198,14 @@ export default {
   },
   methods: {
     editItem(item) {
-      this.editedIndex = this.actions.indexOf(item);
+      this.editedIndex = this.content.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
     deleteItem(item) {
-      const index = this.actions.indexOf(item);
+      const index = this.content.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        this.actions.splice(index, 1);
+        this.content.splice(index, 1);
     },
     close() {
       this.dialog = false;
@@ -215,9 +216,9 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.actions[this.editedIndex], this.editedItem);
+        Object.assign(this.content[this.editedIndex], this.editedItem);
       } else {
-        this.actions.push(this.editedItem);
+        this.content.push(this.editedItem);
       }
       this.close();
     },

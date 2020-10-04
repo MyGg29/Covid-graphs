@@ -1,5 +1,6 @@
 const state = () => ({
   all: [],
+  responsables: ["xavier", "pierre", "paul", "jack"]
 })
 const mutations = {
   LOAD_ACTIONS(state, actions) {
@@ -36,6 +37,7 @@ export default {
 const mock = {
   actions: [
     {
+      nomAction: "Nom action 0",
       dateProgramme: new Date("2020-04-15").toISOString().substr(0, 10),
       responsable: "xavier",
       lieuRealisation: "Brest",
@@ -43,6 +45,7 @@ const mock = {
       commentaire: 4.0,
     },
     {
+      nomAction: "Nom action 0",
       dateProgramme: new Date("2020-05-15").toISOString().substr(0, 10),
       responsable: "xavier",
       lieuRealisation: "Brest",
@@ -50,6 +53,7 @@ const mock = {
       commentaire: 4.3,
     },
     {
+      nomAction: "Nom action 0",
       dateProgramme: new Date("2020-06-15").toISOString().substr(0, 10),
       responsable: "xavier",
       lieuRealisation: "Brest",
@@ -57,6 +61,7 @@ const mock = {
       commentaire: 6.0,
     },
     {
+      nomAction: "Nom action 0",
       dateProgramme: new Date("2020-07-15").toISOString().substr(0, 10),
       responsable: "pierre",
       lieuRealisation: "Brest",
@@ -64,6 +69,7 @@ const mock = {
       commentaire: 4.3,
     },
     {
+      nomAction: "Nom action 0",
       dateProgramme: new Date("2020-08-15").toISOString().substr(0, 10),
       responsable: "pierre",
       lieuRealisation: "Brest",
@@ -71,6 +77,7 @@ const mock = {
       commentaire: 3.9,
     },
     {
+      nomAction: "Nom action 0",
       dateProgramme: new Date("2020-09-15").toISOString().substr(0, 10),
       responsable: "paul",
       lieuRealisation: "Brest",
@@ -78,6 +85,7 @@ const mock = {
       commentaire: 0.0,
     },
     {
+      nomAction: "Nom action 0",
       dateProgramme: new Date("2020-10-15").toISOString().substr(0, 10),
       responsable: "paul",
       lieuRealisation: "Brest",
@@ -85,6 +93,7 @@ const mock = {
       commentaire: 0,
     },
     {
+      nomAction: "Nom action 0",
       dateProgramme: new Date("2020-11-15").toISOString().substr(0, 10),
       responsable: "paul",
       lieuRealisation: "Brest",
@@ -92,6 +101,7 @@ const mock = {
       commentaire: 6.5,
     },
     {
+      nomAction: "Nom action 0",
       dateProgramme: new Date("2020-12-15").toISOString().substr(0, 10),
       responsable: "jack",
       lieuRealisation: "Brest",
@@ -99,6 +109,7 @@ const mock = {
       commentaire: 4.9,
     },
     {
+      nomAction: "Nom action 0",
       dateProgramme: new Date("2021-01-15").toISOString().substr(0, 10),
       responsable: "jack",
       lieuRealisation: "Brest",
@@ -106,6 +117,7 @@ const mock = {
       commentaire: 7,
     },
     {
+      nomAction: "Nom action 0",
       dateProgramme: new Date("2021-01-15").toISOString().substr(0, 10),
       responsable: "jack",
       lieuRealisation: "Brest",
@@ -113,6 +125,7 @@ const mock = {
       commentaire: 7,
     },
     {
+      nomAction: "Nom action 0",
       dateProgramme: new Date("2021-01-15").toISOString().substr(0, 10),
       responsable: "jack",
       lieuRealisation: "Brest",
@@ -120,6 +133,7 @@ const mock = {
       commentaire: 7,
     },
     {
+      nomAction: "Nom action 0",
       dateProgramme: new Date("2021-01-15").toISOString().substr(0, 10),
       responsable: "jack",
       lieuRealisation: "Brest",
@@ -127,6 +141,7 @@ const mock = {
       commentaire: 7,
     },
     {
+      nomAction: "Nom action 0",
       dateProgramme: new Date("2021-01-15").toISOString().substr(0, 10),
       responsable: "jack",
       lieuRealisation: "Brest",

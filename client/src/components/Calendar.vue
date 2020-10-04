@@ -135,6 +135,12 @@
 
 <script>
   export default {
+    props: {
+      content: {
+        type: Array,
+        default: () => []
+      }
+    },
     data: () => ({
       focus: '',
       type: 'month',
@@ -206,6 +212,7 @@
           })
         }
         this.events = events
+        this.events = this.content
       },
       rnd (a, b) {
         return Math.floor((b - a + 1) * Math.random()) + a

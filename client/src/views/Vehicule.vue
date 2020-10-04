@@ -20,7 +20,8 @@
       >
         <v-card>
           <v-card-title>Calendrier</v-card-title>
-          <Calendar />
+          <Calendar
+          />
         </v-card>
       </v-col>
       <v-col
@@ -73,6 +74,7 @@
 <script>
 import Calendar from "../components/Calendar";
 import Table from "../components/Table";
+import CalendarAdapter from "../helpers/CalendarHelper.ts"
 import { mapState } from "vuex"
 
 export default {
@@ -110,6 +112,14 @@ export default {
       actions: state => state.actions.all,
       responsables: state => state.actions.responsables
     }),
+    eventsActions: function() {
+      let adapted = []
+      this.actions.forEach((action) => {
+        const adaptedAction = new CalendarAdapter(action).getEvent()
+        adapted.push(adaptedAction)
+      })
+      return adapted
+    }
   },
 };
 </script>

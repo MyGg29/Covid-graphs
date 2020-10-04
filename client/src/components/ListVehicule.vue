@@ -24,7 +24,7 @@ import CardVehicule from "./CardVehicule";
 export default {
   name: "ListVehicule",
   components: {
-    CardVehicule,
+    CardVehicule
   },
   props: {
     vehicules: {
@@ -32,10 +32,8 @@ export default {
       default: () => []
     }
   },
-  data: function () {
-    return {
-    };
-  },
+  data: function() {
+    return {};
+  }
 };
 </script>
-

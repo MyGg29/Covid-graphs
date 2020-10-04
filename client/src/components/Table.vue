@@ -10,25 +10,15 @@
       @dblclick:row="(e, item) => editItem(item.item)"
     >
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon
-          small
-          class="mr-2"
-          @click="editItem(item)"
-        >
+        <v-icon small class="mr-2" @click="editItem(item)">
           mdi-pencil
         </v-icon>
-        <v-icon
-          small
-          @click="deleteItem(item)"
-        >
+        <v-icon small @click="deleteItem(item)">
           mdi-delete
         </v-icon>
       </template>
       <template v-slot:no-data>
-        <v-btn
-          color="primary"
-          @click="initialize"
-        >
+        <v-btn color="primary" @click="initialize">
           Reset
         </v-btn>
       </template>
@@ -38,14 +28,8 @@
       color="white"
       :height="showCreateButton ? undefined : '0px'"
     >
-      <v-dialog
-        v-model="dialog"
-        max-width="700px"
-      >
-        <template
-          v-if="showCreateButton"
-          v-slot:activator="{ on, attrs }"
-        >
+      <v-dialog v-model="dialog" max-width="700px">
+        <template v-if="showCreateButton" v-slot:activator="{ on, attrs }">
           <v-btn
             color="primary"
             dark
@@ -65,11 +49,7 @@
             <v-container>
               <v-form>
                 <v-row>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="6"
-                  >
+                  <v-col cols="12" sm="6" md="6">
                     <DatePicker
                       v-model="editedItem.dateProgramme"
                       disabled
@@ -80,8 +60,8 @@
                       :items="responsables"
                       label="Réponsable"
                     />
-                    <v-text-field 
-                      v-model="editedItem.lieuRealisation" 
+                    <v-text-field
+                      v-model="editedItem.lieuRealisation"
                       label="Lieu de réalisation"
                     />
                     <DatePicker
@@ -89,18 +69,10 @@
                       label="Date de réalisation"
                     />
                   </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="6"
-                  >
-                    <v-file-input
-                      multiple
-                      chips
-                      label="Pièces jointes"
-                    />
-                    <v-textarea 
-                      v-model="editedItem.commentaire" 
+                  <v-col cols="12" sm="6" md="6">
+                    <v-file-input multiple chips label="Pièces jointes" />
+                    <v-textarea
+                      v-model="editedItem.commentaire"
                       label="Commentaire"
                     />
                   </v-col>
@@ -111,18 +83,10 @@
 
           <v-card-actions>
             <v-spacer />
-            <v-btn
-              color="blue darken-1"
-              text
-              @click="close"
-            >
+            <v-btn color="blue darken-1" text @click="close">
               Cancel
             </v-btn>
-            <v-btn
-              color="blue darken-1"
-              text
-              @click="save"
-            >
+            <v-btn color="blue darken-1" text @click="save">
               Save
             </v-btn>
           </v-card-actions>
@@ -136,7 +100,7 @@
 import DatePicker from "@/components/utils/DatePicker";
 export default {
   components: {
-    DatePicker,
+    DatePicker
   },
   props: {
     itemsPerPage: {
@@ -152,9 +116,7 @@ export default {
     showEditButton: Boolean,
     headers: {
       type: Array,
-      default: () => [
-        { text: "No Data", value: "NoData" },
-      ]
+      default: () => [{ text: "No Data", value: "NoData" }]
     },
     content: {
       type: Array,
@@ -173,28 +135,32 @@ export default {
       responsable: 0,
       lieuRealisation: 0,
       dateRealisation: 0,
-      commentaire: 0,
+      commentaire: 0
     },
     defaultItem: {
       dateProgramme: "",
       responsable: 0,
       lieuRealisation: 0,
       dateRealisation: 0,
-      commentaire: 0,
-    },
+      commentaire: 0
+    }
   }),
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Editer action préventive";
     },
-    pageIncomingAction: function(){
-      return this.content.findIndex((x) => x.dateRealisation === null) % this.itemsPerPage + 1;
+    pageIncomingAction: function() {
+      return (
+        (this.content.findIndex(x => x.dateRealisation === null) %
+          this.itemsPerPage) +
+        1
+      );
     }
   },
   watch: {
     dialog(val) {
       val || this.close();
-    },
+    }
   },
   methods: {
     editItem(item) {
@@ -221,7 +187,7 @@ export default {
         this.content.push(this.editedItem);
       }
       this.close();
-    },
-  },
+    }
+  }
 };
 </script>

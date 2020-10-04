@@ -1,14 +1,8 @@
 <template>
   <div>
-    <v-breadcrumbs
-      :items="breadcrumbs"
-      large
-    >
+    <v-breadcrumbs :items="breadcrumbs" large>
       <template v-slot:item="{ item }">
-        <v-breadcrumbs-item
-          :href="item.href"
-          :disabled="item.disabled"
-        >
+        <v-breadcrumbs-item :href="item.href" :disabled="item.disabled">
           <h1>{{ item.text }}</h1>
         </v-breadcrumbs-item>
       </template>
@@ -17,10 +11,7 @@
       <v-col cols="2">
         <ListAction @update:selected="selectedAction = $event" />
       </v-col>
-      <v-col 
-        v-if="typeof selectedAction.id === 'number'"
-        cols="10"
-      >
+      <v-col v-if="typeof selectedAction.id === 'number'" cols="10">
         <v-card>
           <v-row>
             <v-col cols="5">
@@ -28,23 +19,14 @@
                 <v-card-title>
                   <h1>{{ selectedAction.text }}</h1>
                 </v-card-title>
-                <v-form
-                  ref="form"
-                  v-model="valid"
-                  lazy-validation
-                >
-                  <v-card
-                    class="mx-4"
-                    elevation="1"
-                  >
+                <v-form ref="form" v-model="valid" lazy-validation>
+                  <v-card class="mx-4" elevation="1">
                     <v-card-title primary-title>
                       <h3 class="headline mb-0">
                         Récurence
                       </h3>
                     </v-card-title>
-                    <v-card-text
-                      class="d-flex flex-column"
-                    >
+                    <v-card-text class="d-flex flex-column">
                       <div class="d-flex flex-row mb-4">
                         <v-text-field
                           v-model="recurrence.chiffre"
@@ -76,19 +58,14 @@
                       />
                     </v-card-text>
                   </v-card>
-                  <v-card
-                    class="mx-4 my-2"
-                    elevation="1"
-                  >
+                  <v-card class="mx-4 my-2" elevation="1">
                     <v-card-title primary-title>
                       <h3 class="headline mb-0">
                         Notifications
                       </h3>
                     </v-card-title>
                     <v-card-text>
-                      <div
-                        class="d-flex flex-row mb-6"
-                      >
+                      <div class="d-flex flex-row mb-6">
                         <v-text-field
                           v-model="delaiNotification"
                           :rule="delaiRules"
@@ -128,10 +105,7 @@
                   <h1>Evènements prévues</h1>
                 </v-card-title>
                 <v-card-text>
-                  <Table
-                    :items-per-page="10"
-                    :responsables="responsables"
-                  />
+                  <Table :items-per-page="10" :responsables="responsables" />
                 </v-card-text>
               </v-card>
             </v-col>
@@ -143,8 +117,8 @@
 </template>
 <script>
 import ListAction from "@/components/ListAction";
-import Table from "@/components/Table"
-import DatePicker from "@/components/utils/DatePicker"
+import Table from "@/components/Table";
+import DatePicker from "@/components/utils/DatePicker";
 export default {
   components: {
     ListAction,
@@ -157,20 +131,20 @@ export default {
       default: 0
     }
   },
-  data: function () {
+  data: function() {
     return {
       breadcrumbs: [
         {
           text: "Mes vehicules",
-          href: "/vehicule",
+          href: "/vehicule"
         },
         {
           text: "Vehicule " + this.id,
-          href: "/vehicule/" + this.id,
+          href: "/vehicule/" + this.id
         },
         {
-          text: "Action préventive",
-        },
+          text: "Action préventive"
+        }
       ],
       selectedAction: {
         id: 1,
@@ -179,30 +153,36 @@ export default {
       valid: true,
       recurrence: {
         chiffre: 1,
-        chiffreRules: (v) => !!v || "Fréquence obligatoire",
+        chiffreRules: v => !!v || "Fréquence obligatoire",
         periode: "mois",
-        items: ["jour","mois", "année"],
+        items: ["jour", "mois", "année"],
         aPartirDe: "Tout les 15 du mois",
         aPartirDeDate: "2020-04-15",
-        aPartirDeItems: ["Tout les 15 du mois", "Tout les mois le troisième mardi"]
+        aPartirDeItems: [
+          "Tout les 15 du mois",
+          "Tout les mois le troisième mardi"
+        ]
       },
       delaiNotification: 15,
-      delaiRules: [
-        (v) => !!v || "Delai obligatoire",
-      ],
+      delaiRules: [v => !!v || "Delai obligatoire"],
       notifications: {
         methodeSelected: "mail",
         methodes: ["sms", "mail"],
-        destinataires: ["xavier@aeroport.fr", "pierre@aeroport.fr", "paul@aeroport.fr", "jacque@aeroport.fr"],
-        selectedDestinataires: ["xavier@aeroport.fr"],
+        destinataires: [
+          "xavier@aeroport.fr",
+          "pierre@aeroport.fr",
+          "paul@aeroport.fr",
+          "jacque@aeroport.fr"
+        ],
+        selectedDestinataires: ["xavier@aeroport.fr"]
       },
-      responsables: ["xavier", "pierre", "paul", "jack"],
+      responsables: ["xavier", "pierre", "paul", "jack"]
     };
-  },
+  }
 };
 </script>
 <style scoped>
-  .centered-input >>> input {
-    text-align: center
-  }
+.centered-input >>> input {
+  text-align: center;
+}
 </style>

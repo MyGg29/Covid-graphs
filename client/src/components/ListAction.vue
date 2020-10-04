@@ -1,19 +1,9 @@
 <template>
-  <v-card
-    class="mx-auto"
-    tile
-  >
+  <v-card class="mx-auto" tile>
     <v-list shaped>
       <v-subheader>Liste actions préventive</v-subheader>
-      <v-list-item-group
-        v-model="selected"
-        color="primary"
-        @change="click"
-      >
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-        >
+      <v-list-item-group v-model="selected" color="primary" @change="click">
+        <v-list-item v-for="(item, i) in items" :key="i">
           <v-list-item-content>
             <v-text-field
               v-if="item.editable"
@@ -22,10 +12,7 @@
               append-icon="add"
               @keydown="createAction"
             />
-            <v-list-item-title
-              v-else
-              v-text="item.text" 
-            />
+            <v-list-item-title v-else v-text="item.text" />
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
@@ -47,24 +34,27 @@ export default {
       { text: "Nom action 7" },
       { text: "Nom action 8" },
       { text: "Nom action 9" },
-      { text: "Ajouter une action", editable: true}
+      { text: "Ajouter une action", editable: true }
     ],
     nomNouvelleAction: ""
   }),
   methods: {
-    click: function(){
-      if(typeof this.selected === "number"){
-        this.$emit("update:selected", {id:this.selected, text: this.items[this.selected].text})
-      }else{
-        this.$emit("update:selected", {id:this.selected, text: undefined})
+    click: function() {
+      if (typeof this.selected === "number") {
+        this.$emit("update:selected", {
+          id: this.selected,
+          text: this.items[this.selected].text
+        });
+      } else {
+        this.$emit("update:selected", { id: this.selected, text: undefined });
       }
     },
-    createAction: function(e){
-      if(e.key==="Enter"){
+    createAction: function(e) {
+      if (e.key === "Enter") {
         this.items.splice(this.items.length - 1, 0, {
           text: this.nomNouvelleAction
-        })
-        this.nomNouvelleAction=""
+        });
+        this.nomNouvelleAction = "";
       }
     }
   }

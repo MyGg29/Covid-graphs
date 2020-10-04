@@ -8,34 +8,33 @@
         <DialogCreateVehicule />
       </v-col>
     </v-row>
-    <br>
+    <br />
     <ListVehicule :vehicules="vehicules" />
   </div>
 </template>
 <script>
-import {mapState, mapActions} from "vuex"
+import { mapState, mapActions } from "vuex";
 import ListVehicule from "../components/ListVehicule";
-import DialogCreateVehicule from "../components/DialogCreateVehicule"
+import DialogCreateVehicule from "../components/DialogCreateVehicule";
 export default {
   name: "Vehicules",
   components: {
     ListVehicule,
     DialogCreateVehicule
   },
-  data (){
-    return {
-    }
+  data() {
+    return {};
   },
   computed: {
-    ...mapState({ 
+    ...mapState({
       vehicules: state => state.vehicules.all
-    }),
+    })
   },
-  created(){
-    this.$store.dispatch("vehicules/loadVehicules")
+  created() {
+    this.$store.dispatch("vehicules/loadVehicules");
   },
   methods: {
-    ...mapActions("vehicules", ["addVehicule"]),
-  },
+    ...mapActions("vehicules", ["addVehicule"])
+  }
 };
 </script>

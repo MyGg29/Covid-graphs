@@ -1,36 +1,25 @@
 <template>
   <v-card>
-    <v-img
-      class="white--text align-end"
-      height="200px"
-      :src="cardImgSrc"
-    />
+    <v-img class="white--text align-end" height="200px" :src="cardImgSrc" />
 
     <v-card-title>{{ cardTitle }}</v-card-title>
 
     <v-card class="mx-6">
-      <v-list
-        dense
-      >
+      <v-list dense>
         <v-subheader>Informations véhicule</v-subheader>
         <v-list-item-group color="primary">
-          <v-list-item
-            v-for="(item, i) in infosVehicule"
-            :key="i"
-          >
+          <v-list-item v-for="(item, i) in infosVehicule" :key="i">
             <v-list-item-content>
-              <v-list-item-title>{{ item.label }} - {{ item.valeur }}</v-list-item-title>
+              <v-list-item-title
+                >{{ item.label }} - {{ item.valeur }}</v-list-item-title
+              >
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-card>
     <v-card-actions>
-      <v-btn
-        color="blue"
-        :to="'vehicule/' + idVehicule"
-        block
-      >
+      <v-btn color="blue" :to="'vehicule/' + idVehicule" block>
         Acceder au dossier du véhicule
       </v-btn>
     </v-card-actions>
@@ -54,7 +43,7 @@ export default {
     },
     cardHeader: {
       type: String,
-      default: () => "Default header",
+      default: () => "Default header"
     },
     cardImgSrc: {
       type: String,
@@ -67,11 +56,10 @@ export default {
     infosVehicule: {
       type: Array,
       default: () => []
-    },
+    }
   },
   data() {
-    return {
-    };
-  },
+    return {};
+  }
 };
 </script>

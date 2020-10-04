@@ -27,18 +27,10 @@
       @change="selected"
     >
       <v-spacer />
-      <v-btn
-        text
-        color="primary"
-        @click="menu = false"
-      >
+      <v-btn text color="primary" @click="menu = false">
         Cancel
       </v-btn>
-      <v-btn
-        text
-        color="primary"
-        @click="$refs.menu.save(value)"
-      >
+      <v-btn text color="primary" @click="$refs.menu.save(value)">
         OK
       </v-btn>
     </v-date-picker>
@@ -55,20 +47,19 @@ export default {
     value: {
       type: String,
       default: "1970/01/01"
-    } 
+    }
   },
   data() {
     return {
       menu: false,
       modal: false,
-      menu2: false,
-    }
+      menu2: false
+    };
   },
   methods: {
-    selected: function(){
-      this.$emit("input", this.value)
+    selected: function() {
+      this.$emit("input", this.value);
     }
   }
-}
-
+};
 </script>

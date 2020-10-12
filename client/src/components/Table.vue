@@ -18,9 +18,7 @@
         </v-icon>
       </template>
       <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize">
-          Reset
-        </v-btn>
+        Nothing here
       </template>
     </v-data-table>
     <v-toolbar
@@ -96,8 +94,8 @@
   </div>
 </template>
 
-<script>
-import DatePicker from "@/components/utils/DatePicker";
+<script lang="ts">
+import DatePicker from "../components/utils/DatePicker";
 export default {
   components: {
     DatePicker

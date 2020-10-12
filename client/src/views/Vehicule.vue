@@ -11,7 +11,14 @@
       <v-col cols="12" md="4">
         <v-card>
           <v-card-title>Calendrier</v-card-title>
-          <Calendar />
+          <Calendar 
+            :content="eventsActions"
+            @editClicked="calendarEditClicked"
+          >
+            <template v-slot:modal="{dialog}">
+              <EditDialog :open="dialog"/>
+            </template>
+          </Calendar>
         </v-card>
       </v-col>
       <v-col cols="12" md="4">
@@ -21,7 +28,7 @@
             show-edit-buttons
             focus-incoming-actions
             :headers="headers"
-            :content="actions"
+            :content="actionsPrev[0].actions"
             :responsables="responsables"
             :items-per-page="5"
           />
@@ -49,13 +56,15 @@
 <script>
 import Calendar from "../components/Calendar";
 import Table from "../components/Table";
-import CalendarAdapter from "../helpers/CalendarHelper.ts";
+import EditDialog from "../components/EditDialog";
+import { CalendarAdapter } from "../helpers/CalendarHelper";
 import { mapState } from "vuex";
 
 export default {
   components: {
     Calendar,
-    Table
+    Table,
+    EditDialog,
   },
   props: ["id"],
   data: function() {
@@ -76,7 +85,8 @@ export default {
         { text: "Lieu réalisation", value: "lieuRealisation" },
         { text: "Résponsable", value: "responsable" },
         { text: "Commentaire", value: "commentaire" }
-      ]
+      ],
+      editDialogOpen: false,
     };
   },
   created() {
@@ -84,17 +94,24 @@ export default {
   },
   computed: {
     ...mapState({
-      actions: state => state.actions.all,
+      actionsPrev: state => state.actions.all,
       responsables: state => state.actions.responsables
     }),
     eventsActions: function() {
       let adapted = [];
-      this.actions.forEach(action => {
-        const adaptedAction = new CalendarAdapter(action).getEvent();
-        adapted.push(adaptedAction);
+      this.actionsPrev.forEach(actionPrev => {
+        actionPrev.actions.forEach(action => {
+          const adaptedAction = new CalendarAdapter(action)
+          adapted.push(adaptedAction.getEvent())
+        })
       });
       return adapted;
-    }
+    },
+  },
+  methods: {
+    calendarEditClicked() {
+      this.editDialogOpen = true
+    },
   }
 };
 </script>

@@ -1,9 +1,24 @@
 interface IAction {
-  nomAction: String;
+  nomAction: string;
   dateProgramme: Date;
-  responsable: String;
-  lieuRealisation: String;
+  responsable: string;
+  lieuRealisation: string;
   dateRealisation: Date;
-  commentaire: String;
+  commentaire: string;
 }
-export { IAction };
+
+interface IParametresActions {
+  recurenceJour: number,
+  recurenceMois: string,
+  recurenceApartirDe: Date,
+  notificationMailNbJourAvant: number,
+  notificationMethode: string,
+  destinataire: string;
+}
+
+interface IActionPreventive {
+  nomAction: string,
+  parametres: IParametresActions,
+  actions: IAction[],
+}
+export { IAction, IParametresActions, IActionPreventive};

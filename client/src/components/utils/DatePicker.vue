@@ -56,6 +56,11 @@ export default {
       menu2: false
     };
   },
+  watch: {
+    value: function(newVal){
+      console.log(newVal, this.value)
+    }
+  },
   methods: {
     selected: function() {
       this.$emit("input", this.value);

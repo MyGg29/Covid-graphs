@@ -46,7 +46,7 @@ const mock = {
         { label: "Préssion pneus", valeur: "3 bars" },
         { label: "Infomation", valeur: "valeur" }
       ],
-      img: "https://picsum.photos/600/400/?image=25"
+      img: "upload/camion1.jpg"
     },
     {
       id: 2,
@@ -57,7 +57,7 @@ const mock = {
         { label: "Préssion pneus", valeur: "3 bars" },
         { label: "Infomation", valeur: "valeur" }
       ],
-      img: "https://picsum.photos/600/400/?image=25"
+      img: "upload/camion2.jpg"
     },
     {
       id: 3,
@@ -68,7 +68,7 @@ const mock = {
         { label: "Préssion pneus", valeur: "3 bars" },
         { label: "Infomation", valeur: "valeur" }
       ],
-      img: "https://picsum.photos/600/400/?image=25"
+      img: "upload/camion3.jpg"
     },
     {
       id: 4,
@@ -79,7 +79,7 @@ const mock = {
         { label: "Préssion pneus", valeur: "3 bars" },
         { label: "Infomation", valeur: "valeur" }
       ],
-      img: "https://picsum.photos/600/400/?image=25"
+      img: "upload/camion4.jpg"
     },
     {
       id: 5,
@@ -90,7 +90,7 @@ const mock = {
         { label: "Préssion pneus", valeur: "3 bars" },
         { label: "Infomation", valeur: "valeur" }
       ],
-      img: "https://picsum.photos/600/400/?image=25"
+      img: "upload/camion1.jpg"
     },
     {
       id: 6,
@@ -101,7 +101,7 @@ const mock = {
         { label: "Préssion pneus", valeur: "3 bars" },
         { label: "Infomation", valeur: "valeur" }
       ],
-      img: "https://picsum.photos/600/400/?image=25"
+      img: "upload/camion2.jpg"
     }
   ]
 };

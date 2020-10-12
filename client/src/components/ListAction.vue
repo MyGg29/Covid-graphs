@@ -20,24 +20,22 @@
   </v-card>
 </template>
 <script>
+import { mapState} from "vuex"
 export default {
+  props: {
+    items: {
+      type: Array,
+    },
+  },
   data: () => ({
-    selected: 1,
-    items: [
-      { text: "Nom action 0" },
-      { text: "Nom action 1" },
-      { text: "Nom action 2" },
-      { text: "Nom action 3" },
-      { text: "Nom action 4" },
-      { text: "Nom action 5" },
-      { text: "Nom action 6" },
-      { text: "Nom action 7" },
-      { text: "Nom action 8" },
-      { text: "Nom action 9" },
-      { text: "Ajouter une action", editable: true }
-    ],
+    selected: 0,
     nomNouvelleAction: ""
   }),
+  computed: {
+    ...mapState({
+      actions: state => state.actions.all
+    })
+  },
   methods: {
     click: function() {
       if (typeof this.selected === "number") {
@@ -51,9 +49,28 @@ export default {
     },
     createAction: function(e) {
       if (e.key === "Enter") {
-        this.items.splice(this.items.length - 1, 0, {
+        const indexNewItem = this.items.length - 1
+        this.items.splice(indexNewItem, 0, {
           text: this.nomNouvelleAction
         });
+        this.selected = indexNewItem
+        this.$emit("update:selected", { 
+          id: this.selected, text: this.items[this.selected].text 
+        });
+        this.actions.push({
+          nomAction: this.nomNouvelleAction,
+          parametres: {
+            recurenceJour: 1,
+            recurenceMois:"mois",
+            recurenceApartirDe: new Date().toISOString().substr(0,10),
+            notificationMailNbJourAvant: 10,
+            notificationMethode: "mail",
+            destinataire: "xavier@aeroport.fr"
+          },
+          actions: [{
+
+          }]
+        })
         this.nomNouvelleAction = "";
       }
     }

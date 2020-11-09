@@ -70,7 +70,7 @@ export default {
       if (this.valid) {
         this.addVehicule({
           nomVehicule: this.newVehiculeName,
-          img: "https://picsum.photos/600/400/?image=25",
+          img: this.file,
           infosVehicule: this.newVehiculeInfos
         });
         this.dialog = false;

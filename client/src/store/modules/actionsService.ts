@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 const state = () => ({
   all: [],
   responsables: ["xavier", "pierre", "paul", "jack"]
@@ -9,12 +11,12 @@ const mutations = {
 };
 const actions = {
   loadActions({ commit }) {
-    commit("LOAD_ACTIONS", mock);
-    //Vue.axios.get("test").then(result => {
-    //  commit("SAVE_VEHICULES", result.data)
-    //}).catch(error => {
-    //  throw new Error(`API ${error}`)
-    //})
+    //commit("LOAD_ACTIONS", mock);
+    Vue.axios.get("actions").then(result => {
+      commit("LOAD_ACTIONS", result.data)
+    }).catch(error => {
+      throw new Error(`API ${error}`)
+    })
   },
   addAction({ commit }, action) {
     console.log(state);

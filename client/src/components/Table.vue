@@ -4,6 +4,8 @@
       :headers="headers"
       :items="content"
       :items-per-page="itemsPerPage"
+      :loading="loading"
+      loading-text="Loading... Please wait"
       :page="focusIncomingActions ? pageIncomingAction : 1"
       sort-by="dateProgramme"
       class="elevation-1"
@@ -123,6 +125,10 @@ export default {
           NoData: "Nothing here"
         }
       ]
+    },
+    loading: {
+      type: Boolean,
+      default: () => false
     }
   },
   data: () => ({

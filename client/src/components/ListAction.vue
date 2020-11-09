@@ -2,15 +2,20 @@
   <v-card class="mx-auto" tile>
     <v-list shaped>
       <v-subheader>Liste actions préventive</v-subheader>
-      <v-list-item-group v-model="selected" color="primary" @change="click">
+      <v-list-item-group 
+        v-model="selected" 
+        color="primary" 
+        mandatory
+        @change="click"
+      >
         <v-list-item v-for="(item, i) in items" :key="i">
           <v-list-item-content>
             <v-text-field
-              v-if="item.editable"
+              v-if="i === items.length - 1"
               v-model="nomNouvelleAction"
               label="Ajouter une action"
               append-icon="add"
-              @keydown="createAction"
+              @keydown.enter="createAction"
             />
             <v-list-item-title v-else v-text="item.text" />
           </v-list-item-content>
@@ -19,7 +24,7 @@
     </v-list>
   </v-card>
 </template>
-<script>
+<script lang="ts">
 import { mapState} from "vuex"
 export default {
   props: {
@@ -37,7 +42,9 @@ export default {
     })
   },
   methods: {
-    click: function() {
+    click() {
+      console.log("click")
+      console.log(this.selected, this.items[this.selected].text)
       if (typeof this.selected === "number") {
         this.$emit("update:selected", {
           id: this.selected,
@@ -47,32 +54,29 @@ export default {
         this.$emit("update:selected", { id: this.selected, text: undefined });
       }
     },
-    createAction: function(e) {
-      if (e.key === "Enter") {
-        const indexNewItem = this.items.length - 1
-        this.items.splice(indexNewItem, 0, {
-          text: this.nomNouvelleAction
-        });
-        this.selected = indexNewItem
-        this.$emit("update:selected", { 
-          id: this.selected, text: this.items[this.selected].text 
-        });
-        this.actions.push({
-          nomAction: this.nomNouvelleAction,
-          parametres: {
-            recurenceJour: 1,
-            recurenceMois:"mois",
-            recurenceApartirDe: new Date().toISOString().substr(0,10),
-            notificationMailNbJourAvant: 10,
-            notificationMethode: "mail",
-            destinataire: "xavier@aeroport.fr"
-          },
-          actions: [{
+    createAction(e) {
+      const indexNewItem = this.items.length - 1
+      this.items.splice(indexNewItem, 0, {
+        text: this.nomNouvelleAction
+      });
+      this.$emit("update:selected", { 
+        id: this.selected, text: this.items[this.selected].text 
+      });
+      this.actions.push({
+        nomAction: this.nomNouvelleAction,
+        parametres: {
+          recurenceJour: 1,
+          recurenceMois:"mois",
+          recurenceApartirDe: new Date().toISOString().substr(0,10),
+          notificationMailNbJourAvant: 10,
+          notificationMethode: "mail",
+          destinataire: "xavier@aeroport.fr"
+        },
+        actions: [{
 
-          }]
-        })
-        this.nomNouvelleAction = "";
-      }
+        }]
+      })
+      this.nomNouvelleAction = "";
     }
   }
 };

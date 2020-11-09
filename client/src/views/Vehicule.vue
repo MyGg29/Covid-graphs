@@ -28,7 +28,8 @@
             show-edit-buttons
             focus-incoming-actions
             :headers="headers"
-            :content="actionsPrev[0].actions"
+            :loading="actionsPrev[0] === undefined"
+            :content="actionsPrev[0] ? actionsPrev[0].actions : undefined"
             :responsables="responsables"
             :items-per-page="5"
           />
@@ -58,7 +59,7 @@ import Calendar from "../components/Calendar";
 import Table from "../components/Table";
 import EditDialog from "../components/EditDialog";
 import { CalendarAdapter } from "../helpers/CalendarHelper";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 export default {
   components: {
@@ -69,15 +70,6 @@ export default {
   props: ["id"],
   data: function() {
     return {
-      breadcrumbs: [
-        {
-          text: "Mes vehicules",
-          href: "/vehicule"
-        },
-        {
-          text: "Vehicule " + this.id
-        }
-      ],
       headers: [
         { text: "Action", value: "nomAction" },
         { text: "Date programmé", value: "dateProgramme" },
@@ -91,12 +83,27 @@ export default {
   },
   created() {
     this.$store.dispatch("actions/loadActions");
+    this.$store.dispatch("vehicules/loadVehicules")
   },
   computed: {
     ...mapState({
       actionsPrev: state => state.actions.all,
-      responsables: state => state.actions.responsables
+      responsables: state => state.actions.responsables,
     }),
+    ...mapGetters("vehicules", [
+      "getVehiculeById",
+    ]),
+    breadcrumbs() {
+      return [
+        {
+          text: "Mes vehicules",
+          href: "/vehicule"
+        },
+        {
+          text: this.getVehiculeById(this.id)?.nomVehicule
+        }
+      ]
+    },
     eventsActions: function() {
       let adapted = [];
       this.actionsPrev.forEach(actionPrev => {

@@ -34,7 +34,6 @@ export default {
     this.$store.dispatch("vehicules/loadVehicules");
   },
   methods: {
-    ...mapActions("vehicules", ["addVehicule"])
   }
 };
 </script>

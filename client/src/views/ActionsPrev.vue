@@ -220,7 +220,7 @@ export default {
     console: () => console,
   },
   methods: {
-    recurenceUpdated: function(){
+    recurenceUpdated(){
       console.log(this.selectedAction)
       this.allActions.find(x => x.nomAction === this.selectedAction.text).actions = this.allActions
         .find(x => x.nomAction === this.selectedAction.text)

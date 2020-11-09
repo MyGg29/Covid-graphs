@@ -7,7 +7,7 @@ import actions from "./modules/actionsService";
 
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
-Vue.axios.defaults.baseURL = "https://localhost:3000";
+Vue.axios.defaults.baseURL = "http://localhost:4000";
 export default new Vuex.Store({
   modules: {
     vehicules,
